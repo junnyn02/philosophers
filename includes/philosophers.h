@@ -6,7 +6,7 @@
 /*   By: junguyen <junguyen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 19:06:37 by junguyen          #+#    #+#             */
-/*   Updated: 2024/10/09 17:26:36 by junguyen         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:51:42 by junguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,47 @@
 # include <unistd.h>
 # include <limits.h>
 # include <stdio.h>
+# include <pthread.h>
+# include <stdlib.h>
+# include <sys/time.h>
+# include <unistd.h>
 
-typedef struct s_struct
+typedef struct s_param
 {
-	int	nb_philo;
-	int	time_eat;
-	int	time_sleep;
-	int	time_die;
-	int	must_eat;
-}	t_struct;
+	int				nb_phi;
+	int				time_eat;
+	int				time_sleep;
+	int				time_die;
+	int				must_eat;
+	pthread_mutex_t	print;
+}	t_param;
+
+typedef struct s_philo
+{
+	int				id;
+	int				finish;
+	int				death;
+	pthread_t		th;
+	pthread_mutex_t	*r_fork;
+	pthread_mutex_t	l_fork;
+	t_param			*arg;
+}	t_philo;
+
+typedef struct s_table
+{
+	t_param			param;
+	t_philo			*phi;
+}	t_table;
+
+void	ft_init_lst(t_table *param);
 
 void	ft_putstr_fd(char *str, int fd);
-void	ft_print_struc(t_struct struc);
+void	ft_print_struc(t_table param);
+void	ft_thread(t_table *param);
 
 int		ft_checknbr(char *av);
 
 long	ft_atol(const char *str);
+
 
 #endif

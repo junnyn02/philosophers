@@ -6,19 +6,21 @@
 /*   By: junguyen <junguyen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 19:33:00 by junguyen          #+#    #+#             */
-/*   Updated: 2024/10/09 17:29:26 by junguyen         ###   ########.fr       */
+/*   Updated: 2024/10/15 18:26:03 by junguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-void	ft_print_struc(t_struct struc)
+//a supp
+
+void	ft_print_struc(t_table table)
 {
-	printf("nb philo : %d\n", struc.nb_philo);
-	printf("time die : %d\n", struc.time_die);
-	printf("time eat : %d\n", struc.time_eat);
-	printf("time sleep : %d\n", struc.time_sleep);
-	printf("must eat : %d\n", struc.must_eat);
+	printf("nb philo : %d\n", table.param.nb_phi);
+	printf("time die : %d\n", table.param.time_die);
+	printf("time eat : %d\n", table.param.time_eat);
+	printf("time sleep : %d\n", table.param.time_sleep);
+	printf("must eat : %d\n", table.param.must_eat);
 }
 
 long	ft_atol(const char *str)
@@ -38,7 +40,7 @@ long	ft_atol(const char *str)
 			signe = -1;
 		i++;
 	}
-	while (str[i] > '0' && str[i] < '9')
+	while (str[i] >= '0' && str[i] <= '9')
 	{
 		num = (num * 10) + (str[i] - '0');
 		i++;

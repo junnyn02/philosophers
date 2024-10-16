@@ -6,36 +6,49 @@
 /*   By: junguyen <junguyen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 19:07:25 by junguyen          #+#    #+#             */
-/*   Updated: 2024/10/09 17:33:08 by junguyen         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:15:46 by junguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-int	ft_parse(char **av, t_struct *struc)
+void	ft_print_lst(t_table lst)
+{
+	int	i;
+
+	i = 0;
+	while (i < lst.param.nb_phi)
+	{
+		printf("%d\n", lst.phi[i].id);
+		i++;
+	}
+	// printf("%d\n", lst.phi->arg->time_eat);
+}
+
+int	ft_parse(char **av, t_table *arg)
 {
 	int		i;
 	long	nbr;
 
 	i = 1;
-	struc->must_eat = 0;
+	arg->param.must_eat = 0;
 	while (av[i])
 	{
 		if (ft_checknbr(av[i]) == -1)
-			return (ft_putstr_fd("Error: not a valid int\n", STDERR_FILENO), -1);
+			return (ft_putstr_fd("Error: invalid arg\n", STDERR_FILENO), -1);
 		nbr = ft_atol(av[i]);
 		if (nbr > INT_MAX)
-			return (ft_putstr_fd("Error: not a valid int\n", STDERR_FILENO), -1);
+			return (ft_putstr_fd("Error: invalid arg\n", STDERR_FILENO), -1);
 		if (i == 1)
-			struc->nb_philo = (int)nbr;
+			arg->param.nb_phi = nbr;
 		else if (i == 2)
-			struc->time_die = (int)nbr;
+			arg->param.time_die = nbr;
 		else if (i == 3)
-			struc->time_eat = (int)nbr;
+			arg->param.time_eat = nbr;
 		else if (i == 4)
-			struc->time_sleep = (int)nbr;
+			arg->param.time_sleep = nbr;
 		else if (i == 5)
-			struc->must_eat = (int)nbr;
+			arg->param.must_eat = nbr;
 		i++;
 	}
 	return (0);
@@ -43,12 +56,19 @@ int	ft_parse(char **av, t_struct *struc)
 
 int	main(int ac, char **av)
 {
-	t_struct	struc;
+	t_table	table;
 
+	table.phi = NULL;
 	if (ac < 5 || ac > 6)
 		return (ft_putstr_fd("Error: numbers of args\n", STDERR_FILENO), -1);
-	if (ft_parse(av, &struc) == -1)
+	if (ft_parse(av, &table) == -1)
 		return (-2);
-	ft_print_struc(struc);
+	// ft_print_struc(table); //a supp
+	ft_init_lst(&table);
+	// ft_print_lst(table);
+	if (!table.phi)
+		return (-3);
+	ft_thread(&table);
+	free(table.phi);
 	return (0);
 }
