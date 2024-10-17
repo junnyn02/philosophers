@@ -6,7 +6,7 @@
 /*   By: junguyen <junguyen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 19:06:37 by junguyen          #+#    #+#             */
-/*   Updated: 2024/10/16 17:51:42 by junguyen         ###   ########.fr       */
+/*   Updated: 2024/10/17 15:31:57 by junguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_philo
 	int				id;
 	int				finish;
 	int				death;
+	size_t			start_time;
 	pthread_t		th;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	l_fork;

@@ -6,7 +6,7 @@
 /*   By: junguyen <junguyen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:24:06 by junguyen          #+#    #+#             */
-/*   Updated: 2024/10/16 17:57:53 by junguyen         ###   ########.fr       */
+/*   Updated: 2024/10/17 15:54:54 by junguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,15 @@ void	ft_init_lst(t_table *table)
 		return ;
 	while (i < table->param.nb_phi - 1)
 	{
+		table->phi[i].arg = &table->param;
 		table->phi[i].id = i + 1;
 		table->phi[i].finish = 0;
+		table->phi[i].start_time = 0;
 		table->phi[i].death = 0;
 		table->phi[i].r_fork = &table->phi[i + 1].l_fork;
 		i++;
 	}
+	table->phi[i].arg = &table->param;
 	table->phi[i].id = i + 1;
 	table->phi[i].finish = 0;
 	table->phi[i].death = 0;
