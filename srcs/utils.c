@@ -6,7 +6,7 @@
 /*   By: junguyen <junguyen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 19:33:00 by junguyen          #+#    #+#             */
-/*   Updated: 2024/10/15 18:26:03 by junguyen         ###   ########.fr       */
+/*   Updated: 2024/10/24 18:16:43 by junguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 //a supp
 
-void	ft_print_struc(t_table table)
-{
-	printf("nb philo : %d\n", table.param.nb_phi);
-	printf("time die : %d\n", table.param.time_die);
-	printf("time eat : %d\n", table.param.time_eat);
-	printf("time sleep : %d\n", table.param.time_sleep);
-	printf("must eat : %d\n", table.param.must_eat);
-}
+// void	ft_print_struc(t_table table)
+// {
+// 	printf("nb philo : %d\n", table.param.nb_phi);
+// 	printf("time die : %d\n", table.param.time_die);
+// 	printf("time eat : %d\n", table.param.time_eat);
+// 	printf("time sleep : %d\n", table.param.time_sleep);
+// 	printf("must eat : %d\n", table.param.must_eat);
+// }
 
 long	ft_atol(const char *str)
 {
@@ -84,4 +84,22 @@ void	ft_putstr_fd(char *str, int fd)
 		write(fd, &str[i], 1);
 		i++;
 	}
+}
+
+size_t	get_time(void)
+{
+	struct timeval	time;
+
+	if (gettimeofday(&time, NULL) == -1)
+		write(2, "gettimeofday() error\n", 22);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+}
+
+void	ft_usleep(size_t time)
+{
+	size_t	start;
+
+	start = get_time();
+	while ((get_time() - start) < time)
+		usleep(time / 10);
 }

@@ -6,7 +6,7 @@
 #    By: junguyen <junguyen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/08 19:07:46 by junguyen          #+#    #+#              #
-#    Updated: 2024/10/11 15:26:16 by junguyen         ###   ########.fr        #
+#    Updated: 2024/10/23 15:40:51 by junguyen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CFLAGS = -Wall -Werror -Wextra -g
 
 SRC_PATH = srcs/
 
-SRC =	main.c utils.c lst.c thread.c \
+SRC =	main.c utils.c lst.c thread.c activity.c \
 			
 SRCS = $(addprefix $(SRC_PATH), $(SRC))
 

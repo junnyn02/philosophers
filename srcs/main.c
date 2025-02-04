@@ -6,7 +6,7 @@
 /*   By: junguyen <junguyen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 19:07:25 by junguyen          #+#    #+#             */
-/*   Updated: 2024/10/16 16:15:46 by junguyen         ###   ########.fr       */
+/*   Updated: 2024/10/24 15:05:33 by junguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ int	ft_parse(char **av, t_table *arg)
 	long	nbr;
 
 	i = 1;
-	arg->param.must_eat = 0;
+	arg->param.start = 0;
+	arg->param.must_eat = -1;
+	arg->param.dead = 0;
 	while (av[i])
 	{
 		if (ft_checknbr(av[i]) == -1)
@@ -63,9 +65,7 @@ int	main(int ac, char **av)
 		return (ft_putstr_fd("Error: numbers of args\n", STDERR_FILENO), -1);
 	if (ft_parse(av, &table) == -1)
 		return (-2);
-	// ft_print_struc(table); //a supp
 	ft_init_lst(&table);
-	// ft_print_lst(table);
 	if (!table.phi)
 		return (-3);
 	ft_thread(&table);
