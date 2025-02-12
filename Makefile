@@ -6,7 +6,7 @@
 #    By: junguyen <junguyen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/08 19:07:46 by junguyen          #+#    #+#              #
-#    Updated: 2024/10/23 15:40:51 by junguyen         ###   ########.fr        #
+#    Updated: 2025/02/12 18:15:23 by junguyen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,29 +18,52 @@ CFLAGS = -Wall -Werror -Wextra -g
 
 SRC_PATH = srcs/
 
-SRC =	main.c utils.c lst.c thread.c activity.c \
-			
-SRCS = $(addprefix $(SRC_PATH), $(SRC))
+OBJ_PATH = obj/
 
-OBJ = $(SRCS:.c=.o)
+SRC =	main.c		\
+		utils.c		\
+		lst.c		\
+		thread.c	\
+		activity.c
+SRCS	= ${addprefix $(SRC_PATH), $(SRC)}
 
-.c.o:
-		@$(CC) $(CFLAGS) -c $< -o $@
+OBJ		= $(SRC:.c=.o)
 
-$(NAME): $(OBJ)
-		@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
-		@echo "philo created"
+OBJS	= ${addprefix $(OBJ_PATH), $(OBJ)}
 
-all: $(NAME)
+INCLUDES = -I incs/
 
-clean:
-		@rm -f $(OBJ)
-		@echo "objects cleaned"
+RM		= rm -rfd
+
+RED			:= "\033[0;31m\033[1m"
+GREEN		:= "\033[0;32m\033[1m"
+BLUE		:= "\033[0;34m\033[1m"
+YELLOW		:= "\033[1;33m\033[1m"
+PURPLE		:= "\033[0;35m\033[1m"
+CYAN		:= "\033[0;36m\033[1m"
+WHITE		:= "\033[0;37m\033[1m"
+NO_STYLE	:= "\033[0m"
+
+all:		$(NAME)
+
+$(OBJ_PATH)%.o: $(SRC_PATH)%.c
+			@mkdir -p $(dir $@)
+			$(CC) $(CFLAGS) $(INCLUDES) -c  $< -o $@
+
+$(NAME): $(OBJS)
+		$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(INCLUDES)
+		@echo $(GREEN)$(NAME) compiled!$(NO_STYLE)
+
+
+clean:	
+		@$(RM) $(OBJ_PATH)
+		@echo $(YELLOW)object clean! $(NO_STYLE)
 
 fclean: clean
-		@rm -f $(NAME)
-		@echo "all clean"
-	
+		@$(RM) $(NAME)
+		@echo $(RED)$(NAME) deleted!$(NO_STYLE)
+
 re: fclean all
+		@echo $(PURPLE)$(NAME) reloaded!$(NO_STYLE)
 
 .PHONY: all clean fclean re
