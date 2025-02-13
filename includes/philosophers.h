@@ -6,7 +6,7 @@
 /*   By: junguyen <junguyen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 19:06:37 by junguyen          #+#    #+#             */
-/*   Updated: 2025/02/12 16:17:49 by junguyen         ###   ########.fr       */
+/*   Updated: 2025/02/13 15:40:17 by junguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_param
 	int				finish;
 	long			start;
 	pthread_mutex_t	end;
+	pthread_mutex_t	death;
 	pthread_mutex_t	print;
 }	t_param;
 
@@ -65,6 +66,7 @@ int		ft_sleep(t_philo *philo);
 int		ft_think(t_philo *philo);
 int		ft_activity(t_philo *ph);
 int		ft_print_msg(t_philo *ph, char *str);
+int		check_end(t_philo *ph);
 
 long	ft_atol(const char *str);
 

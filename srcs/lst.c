@@ -6,7 +6,7 @@
 /*   By: junguyen <junguyen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:24:06 by junguyen          #+#    #+#             */
-/*   Updated: 2025/02/12 16:24:54 by junguyen         ###   ########.fr       */
+/*   Updated: 2025/02/13 15:57:51 by junguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_init_lst(t_table *table)
 		table->phi[i].eating = 0;
 		table->phi[i].last_meal = 0;
 		table->phi[i].r_fork = &table->phi[i + 1].l_fork;
-		pthread_mutex_init(&table->phi->l_fork, NULL);
+		pthread_mutex_init(&table->phi[i].l_fork, NULL);
 		i++;
 	}
 	table->phi[i].arg = &table->param;
@@ -48,5 +48,5 @@ void	ft_init_lst(t_table *table)
 	table->phi[i].last_meal = 0;
 	table->phi[i].eating = 0;
 	table->phi[i].r_fork = &table->phi[0].l_fork;
-	pthread_mutex_init(&table->phi->l_fork, NULL);
+	pthread_mutex_init(&table->phi[i].l_fork, NULL);
 }
