@@ -6,7 +6,7 @@
 /*   By: junguyen <junguyen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 11:58:04 by junguyen          #+#    #+#             */
-/*   Updated: 2025/02/14 13:18:13 by junguyen         ###   ########.fr       */
+/*   Updated: 2025/02/14 14:45:04 by junguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,38 +31,19 @@ void	*monitor(void *ph)
 	t_philo	*phi;
 
 	phi = (t_philo *)ph;
-	ft_usleep(phi->arg->time_die + 1);
-	pthread_mutex_lock(&phi->arg->death);
-	if (!check_end(ph, 0) && get_time() - phi->last_meal >= (unsigned long)phi->arg->time_die)
+	while (check_end(ph, 0) == 0)
 	{
-		// pthread_mutex_unlock(&phi->arg->death);
-		ft_print_msg(phi, "has died");
-		check_end(ph, 1);
+		ft_usleep(phi->arg->time_die + 1);
+		pthread_mutex_lock(&phi->arg->death);
+		if (!check_end(ph, 0) && get_time() - phi->last_meal >= (unsigned long)phi->arg->time_die)
+		{
+			ft_print_msg(phi, "has died");
+			check_end(ph, 1);
+			pthread_mutex_unlock(&phi->arg->death);
+			return (NULL);
+		}
+		pthread_mutex_unlock(&phi->arg->death);
 	}
-	pthread_mutex_unlock(&phi->arg->death);
-	return (NULL);
-	// while (check_end(ph, 0) == 0)
-	// {
-	// 	ft_usleep(phi->arg->time_die + 1);
-	// 	pthread_mutex_lock(&phi->arg->death);
-	// 	if (get_time() - phi->last_meal >= (unsigned long)phi->arg->time_die)
-	// 	{
-	// 		ft_print_msg(phi, "has died");
-	// 		check_end(ph, 1);
-	// 		pthread_mutex_unlock(&phi->arg->death);
-	// 		return (NULL);
-	// 		// if (phi->arg->dead == 1)
-	// 		// {
-	// 		// 	pthread_mutex_unlock(&phi->arg->death);
-	// 		// 	return (NULL);
-	// 		// }
-	// 		// ft_print_msg(phi, "has died");
-	// 		// phi->arg->dead = 1;
-	// 		// pthread_mutex_unlock(&phi->arg->death);
-	// 		// return (NULL);
-	// 	}
-	// 	pthread_mutex_unlock(&phi->arg->death);
-	// }
 	return (NULL);
 }
 
@@ -73,16 +54,11 @@ void	*loop(void *philo)
 	phi = (t_philo *)philo;
 	if (phi->id % 2 == 0)
 		ft_usleep(phi->arg->time_eat / 10);
+	if (pthread_create(&(phi)->th_check, NULL, monitor, (phi)) != 0)
+		return (NULL);
 	while (check_end(phi, 0) == 0)
 	{
-		if (pthread_create(&(phi)->th_check, NULL, monitor, (phi)) != 0)
-			return (NULL);
-		// if (ft_activity(philo) == -1)
-		// 	return (NULL);
 		ft_activity(philo);
-		// if (pthread_join(phi->th_check, NULL) != 0)
-		// 	return (NULL);
-		// pthread_detach(phi->th_check);
 	}
 	return (NULL);
 }
@@ -104,9 +80,8 @@ int	ft_create_thread(t_table *table)
 	{
 		if (pthread_join(table->phi[i].th, NULL) != 0)
 			return (-1);
-		// if (pthread_join(table->phi[i].th_check, NULL) != 0)
-		// 	return (-1);
-		// pthread_detach(table->phi[i].th_check);
+		if (pthread_join(table->phi[i].th_check, NULL) != 0)
+			return (-1);
 		i += 1;
 	}
 	return (0);
@@ -122,29 +97,13 @@ void	destroy_mutex(t_table *table)
 		pthread_mutex_destroy(&table->phi[i].l_fork);
 		i++;
 	}
-	// i = 0;
-	// while (i < table->param.nb_phi)
-	// {
-	// 	pthread_mutex_destroy(table->phi[i].r_fork);
-	// 	i++;
-	// }
-	// pthread_mutex_destroy(&table->param.end);
-	// pthread_mutex_destroy(&table->phi->l_fork);
+	pthread_mutex_destroy(&table->param.end);
 	pthread_mutex_destroy(&table->param.print);
-	// pthread_mutex_destroy(&table->param.death);
+	pthread_mutex_destroy(&table->param.death);
 }
 
 void	ft_thread(t_table *table)
 {
-	// int	i;
-
-	// i = 0;
-	// while (i < table->param.nb_phi)
-	// {
-	// 	pthread_mutex_init(&table->phi[i].l_fork, NULL);
-	// 	// pthread_mutex_init(table->phi[i].r_fork, NULL);
-	// 	i++;
-	// }
 	pthread_mutex_init(&table->param.print, NULL);
 	pthread_mutex_init(&table->param.end, NULL);
 	pthread_mutex_init(&table->param.death, NULL);
