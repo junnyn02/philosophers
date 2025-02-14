@@ -6,7 +6,7 @@
 /*   By: junguyen <junguyen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 19:06:37 by junguyen          #+#    #+#             */
-/*   Updated: 2025/02/13 15:40:17 by junguyen         ###   ########.fr       */
+/*   Updated: 2025/02/14 11:49:16 by junguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int		ft_sleep(t_philo *philo);
 int		ft_think(t_philo *philo);
 int		ft_activity(t_philo *ph);
 int		ft_print_msg(t_philo *ph, char *str);
-int		check_end(t_philo *ph);
+int		check_end(t_philo *ph, int i);
 
 long	ft_atol(const char *str);
 
