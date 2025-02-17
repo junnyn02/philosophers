@@ -6,7 +6,7 @@
 /*   By: junguyen <junguyen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 19:07:25 by junguyen          #+#    #+#             */
-/*   Updated: 2025/02/12 16:18:42 by junguyen         ###   ########.fr       */
+/*   Updated: 2025/02/17 16:57:49 by junguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_parse(char **av, t_table *arg)
 		if (ft_checknbr(av[i]) == -1)
 			return (ft_putstr_fd("Error: invalid arg\n", STDERR_FILENO), -1);
 		nbr = ft_atol(av[i]);
-		if (nbr > INT_MAX)
+		if (nbr > INT_MAX || nbr <= 0)
 			return (ft_putstr_fd("Error: invalid arg\n", STDERR_FILENO), -1);
 		ft_fill_arg(&arg, nbr, i);
 		i++;
@@ -60,8 +60,7 @@ int	main(int ac, char **av)
 		return (2);
 	ft_init_lst(&table);
 	if (!table.phi)
-		return (ft_putstr_fd("Error: Malloc\n", STDERR_FILENO), 3);
+		return (3);
 	ft_thread(&table);
-	free(table.phi);
 	return (0);
 }

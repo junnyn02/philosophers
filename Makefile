@@ -6,7 +6,7 @@
 #    By: junguyen <junguyen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/08 19:07:46 by junguyen          #+#    #+#              #
-#    Updated: 2025/02/12 18:15:23 by junguyen         ###   ########.fr        #
+#    Updated: 2025/02/17 17:11:26 by junguyen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,15 +15,16 @@ NAME = philo
 CC =	cc 
 
 CFLAGS = -Wall -Werror -Wextra -g
+# -fsanitize=thread
 
 SRC_PATH = srcs/
 
 OBJ_PATH = obj/
 
-SRC =	main.c		\
-		utils.c		\
-		lst.c		\
-		thread.c	\
+SRC =	main.c			\
+		utils.c			\
+		init_destroy.c	\
+		thread.c		\
 		activity.c
 SRCS	= ${addprefix $(SRC_PATH), $(SRC)}
 
