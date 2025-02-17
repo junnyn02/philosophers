@@ -6,7 +6,7 @@
 /*   By: junguyen <junguyen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 19:06:37 by junguyen          #+#    #+#             */
-/*   Updated: 2024/10/24 16:52:58 by junguyen         ###   ########.fr       */
+/*   Updated: 2025/02/17 17:22:01 by junguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,18 @@ typedef struct s_param
 	int				time_die;
 	int				must_eat;
 	int				dead;
+	int				finish;
 	long			start;
+	pthread_mutex_t	end;
+	pthread_mutex_t	death;
 	pthread_mutex_t	print;
 }	t_param;
 
 typedef struct s_philo
 {
 	int				id;
-	int				finish;
 	int				eating;
+	int				nb_meal;
 	long			last_meal;
 	pthread_t		th;
 	pthread_t		th_check;
@@ -54,15 +57,15 @@ typedef struct s_table
 
 void	ft_init_lst(t_table *param);
 void	ft_putstr_fd(char *str, int fd);
-void	ft_print_struc(t_table param); // a supp
 void	ft_thread(t_table *param);
 void	ft_usleep(size_t time);
+void	destroy_mutex(t_table *table);
+void	error_mutex(t_table **table, int i, int j);
 
 int		ft_checknbr(char *av);
-int		ft_eat(t_philo *philo);
-int		ft_sleep(t_philo *philo);
-int		ft_think(t_philo *philo);
 int		ft_activity(t_philo *ph);
+int		ft_print_msg(t_philo *ph, char *str);
+int		check_end(t_philo *ph, int i);
 
 long	ft_atol(const char *str);
 

@@ -1,0 +1,5 @@
+philo
+obj/
+.vscode/
+*.log
+LazyPhilosophersTester/
