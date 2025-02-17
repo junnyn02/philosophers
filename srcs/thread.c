@@ -6,7 +6,7 @@
 /*   By: junguyen <junguyen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 11:58:04 by junguyen          #+#    #+#             */
-/*   Updated: 2025/02/17 17:22:25 by junguyen         ###   ########.fr       */
+/*   Updated: 2025/02/17 17:53:56 by junguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	*monitor(void *ph)
 		if (!check_end(ph, 0)
 			&& get_time() - phi->last_meal >= (unsigned long)phi->arg->time_die)
 		{
-			if (ft_print_msg(phi, "has died") == 1)
+			if (ft_print_msg(phi, "died") == 1)
 				return (NULL);
 			check_end(ph, 1);
 			if (pthread_mutex_unlock(&phi->arg->death) != 0)
